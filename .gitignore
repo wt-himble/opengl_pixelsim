@@ -1,0 +1,7 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/cmake-build-debug/CMakeFiles
+/opengl_pixelsim/.vs/opengl_pixelsim
