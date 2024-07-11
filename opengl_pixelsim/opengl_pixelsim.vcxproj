@@ -71,8 +71,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\GitHub\opengl_pixelsim\dependencies\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\GitHub\opengl_pixelsim\dependencies;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\GitHub\opengl_pixelsim\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\GitHub\opengl_pixelsim;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -132,6 +132,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\glad.c" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
