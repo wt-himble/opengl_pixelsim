@@ -2,6 +2,8 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 #include "ShaderClass.h"
+#include <stb/stb_image.h>
+#include <filesystem>
 
 
 int main() {
@@ -65,10 +67,33 @@ int main() {
 
 	GLuint indicesData[] = {
 
-		0, 1, 3,
-		1, 2, 3
+		0, 2, 1,
+		0, 3, 2
 
 	};
+
+	// Data to be added to the texture:
+
+	unsigned char data[] = {
+
+		255, 0, 0,
+		0, 0, 255,
+		0, 255, 0,
+		255, 255, 255,
+		255, 255, 255,
+		255, 255, 255,
+		255, 255, 255,
+		255, 255, 255,
+		255, 255, 255,
+		255, 255, 255,
+		255, 255, 255,
+		255, 255, 255,
+
+	};
+
+	// Setup the shaders to render the texture.
+
+	Shader shaderProgram("default.vert", "default.frag");
 
 	// Create and setup the information needed for the quad the texture will render to.
 
@@ -89,43 +114,55 @@ int main() {
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(0 * sizeof(float)));
 	glEnableVertexAttribArray(0);
 
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(4 * sizeof(float)));
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(1);
-
-	// Unbind the VAO, VBO and EBO so they don't get overwritten.
-
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindVertexArray(0);
 
 	// Load the texture in order to render it onto the quad.
 
 	GLuint texture;
 	glGenTextures(1, &texture);
+
+	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, texture);
 
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 320, 180, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
-	glBindTexture(GL_TEXTURE_2D, 0);
+	// An included image loader in the code. In the event I want to pull an image to use as the initial texture, this 
+	// portion of the code will be uncommented. 
 
-	// Setup the shaders to render the texture.
-
-	// Data to be added to the texture:
-
-	uint8_t data[] = {
-
-		1.0f, 0.0f, 0.0f
-
-	};
-
-	glViewport(0, 0, 1280, 720);
-
-	Shader shaderProgram("default.vert", "default.frag");
+	int width, height, nChannels;
+	unsigned char *bytes = stbi_load("C:\\GitHub\\opengl_pixelsim\\images\\testImage.jpg", &width, &height, &nChannels, 0);
 	
+	/*if (bytes) {
+
+		std::cout << "Texture loaded successfully";
+
+		std::cout << "\nImage Dimensions: " << width << " x " << height << std::endl;
+
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+		glGenerateMipmap(GL_TEXTURE_2D);
+
+	} else {
+
+		const char* failureReason = stbi_failure_reason();
+		std::cout << "Failed to load texture  || " << failureReason << std::endl;
+
+	}
+
+	stbi_image_free(bytes);*/
+
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 360, 180, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+	glGenerateMipmap(GL_TEXTURE_2D);
+
+	glTexSubImage2D(GL_TEXTURE_2D, 0, 5, 5, 3, 4, GL_RGB, GL_UNSIGNED_BYTE, data);
+
+	shaderProgram.Use();
+	glUniform1i(glGetUniformLocation(shaderProgram.ID, "texture"), 0);
+
 	// ******************************* Main Loop *******************************
 
 	while (!glfwWindowShouldClose(window)) {
@@ -133,11 +170,7 @@ int main() {
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		glBindTexture(GL_TEXTURE_2D, texture);
-
-		shaderProgram.Activate();
 		glBindVertexArray(VAO);
-
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
 		//this code should be at the end of the while loop

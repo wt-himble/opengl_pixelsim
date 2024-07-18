@@ -1,8 +1,3 @@
 ﻿  main.cpp
-C:\GitHub\opengl_pixelsim\opengl_pixelsim\main.cpp(121,3): warning C4838: conversion from 'float' to 'uint8_t' requires a narrowing conversion
-C:\GitHub\opengl_pixelsim\opengl_pixelsim\main.cpp(121,3): warning C4244: 'initializing': conversion from 'float' to 'uint8_t', possible loss of data
-C:\GitHub\opengl_pixelsim\opengl_pixelsim\main.cpp(121,9): warning C4838: conversion from 'float' to 'uint8_t' requires a narrowing conversion
-C:\GitHub\opengl_pixelsim\opengl_pixelsim\main.cpp(121,9): warning C4244: 'initializing': conversion from 'float' to 'uint8_t', possible loss of data
-C:\GitHub\opengl_pixelsim\opengl_pixelsim\main.cpp(121,15): warning C4838: conversion from 'float' to 'uint8_t' requires a narrowing conversion
-C:\GitHub\opengl_pixelsim\opengl_pixelsim\main.cpp(121,15): warning C4244: 'initializing': conversion from 'float' to 'uint8_t', possible loss of data
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.40.33807\include\filesystem(12): warning STL4038: The contents of <filesystem> are available only with C++17 or later.
   opengl_pixelsim.vcxproj -> C:\GitHub\opengl_pixelsim\opengl_pixelsim\x64\Debug\opengl_pixelsim.exe
