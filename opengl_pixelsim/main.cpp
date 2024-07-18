@@ -43,7 +43,7 @@ int main() {
 
 		std::cout << "Failed to initialize GLAD" << std::endl;
 
-	} 
+	}
 
 	// Generates the platform specific code needed for whatever machine is running the program. Allows for OPENGL to work
 	// across platforms. 
@@ -54,19 +54,19 @@ int main() {
 
 	// Variables to control the texture dimensions (used to create the "play area" for the simulation):
 
-	int textureWidth = 256;
-	int textureHeight = 144;
+	const int textureWidth = 256;
+	const int textureHeight = 144;
 
 	// Information relating to quad:
 
 	float vertexData[] = {
 
-	// Position Coordinates		Texture Coordinates
+		// Position Coordinates		Texture Coordinates
 
-		1.0f, 1.0f, 0.0f,	   		1.0f, 1.0f,
-		1.0f, -1.0f, 0.0f,			1.0f, 0.0f,
-		-1.0f, -1.0f, 0.0f,			0.0f, 0.0f, 
-		-1.0f, 1.0f, 0.0f,			0.0f, 1.0f
+			1.0f, 1.0f, 0.0f,	   		1.0f, 1.0f,
+			1.0f, -1.0f, 0.0f,			1.0f, 0.0f,
+			-1.0f, -1.0f, 0.0f,			0.0f, 0.0f,
+			-1.0f, 1.0f, 0.0f,			0.0f, 1.0f
 
 	};
 
@@ -77,13 +77,44 @@ int main() {
 
 	};
 
-	unsigned char cellColorData[] = {
+	enum cell_types {
 
-		255, 0, 0
+		empty,
+		red,
+		blue,
+		yellow
 
 	};
 
-	std::cout << "First cell data: " << static_cast<int>(cellColorData[0]);
+	cell_types cellTypeData[textureHeight][textureWidth];
+
+	for (int i = 0; i < textureHeight; i++) {
+
+		for (int j = 0; j < textureWidth; j++) {
+
+			cellTypeData[i][j] = empty;
+
+		}
+	}
+
+	unsigned char cellColorData[textureHeight * textureWidth * 3];
+
+	for (int i = 0; i < textureHeight; i++) {
+
+		for (int j = 0; j < textureWidth; j++) {
+
+			switch (cellTypeData[i][j]) {
+
+				case empty:
+
+					std::cout << "Cell is black";
+
+					//make the cells black.
+					
+			}
+		}
+
+	}
 
 	// Setup the shaders to render the texture.
 
@@ -159,7 +190,7 @@ int main() {
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, textureWidth, textureHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
 	glGenerateMipmap(GL_TEXTURE_2D);
 
-	glTexSubImage2D(GL_TEXTURE_2D, 0, 100, 100, 1, 1, GL_RGB, GL_UNSIGNED_BYTE, cellColorData);
+	glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, textureWidth, textureHeight, GL_RGB, GL_UNSIGNED_BYTE, cellColorData);
 
 	shaderProgram.Use();
 	glUniform1i(glGetUniformLocation(shaderProgram.ID, "texture"), 0);
