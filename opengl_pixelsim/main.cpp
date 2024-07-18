@@ -52,6 +52,11 @@ int main() {
 
 	// ******************************* Initializing *******************************
 
+	// Variables to control the texture dimensions (used to create the "play area" for the simulation):
+
+	int textureWidth = 256;
+	int textureHeight = 144;
+
 	// Information relating to quad:
 
 	float vertexData[] = {
@@ -72,24 +77,13 @@ int main() {
 
 	};
 
-	// Data to be added to the texture:
+	unsigned char cellColorData[] = {
 
-	unsigned char data[] = {
-
-		255, 0, 0,
-		0, 0, 255,
-		0, 255, 0,
-		255, 255, 255,
-		255, 255, 255,
-		255, 255, 255,
-		255, 255, 255,
-		255, 255, 255,
-		255, 255, 255,
-		255, 255, 255,
-		255, 255, 255,
-		255, 255, 255,
+		255, 0, 0
 
 	};
+
+	std::cout << "First cell data: " << static_cast<int>(cellColorData[0]);
 
 	// Setup the shaders to render the texture.
 
@@ -131,11 +125,13 @@ int main() {
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
+	// ******************************* Image Loading *******************************
+
 	// An included image loader in the code. In the event I want to pull an image to use as the initial texture, this 
 	// portion of the code will be uncommented. 
 
-	int width, height, nChannels;
-	unsigned char *bytes = stbi_load("C:\\GitHub\\opengl_pixelsim\\images\\testImage.jpg", &width, &height, &nChannels, 0);
+	//int width, height, nChannels;
+	//unsigned char *bytes = stbi_load("C:\\GitHub\\opengl_pixelsim\\images\\testImage.jpg", &width, &height, &nChannels, 0);
 	
 	/*if (bytes) {
 
@@ -155,10 +151,15 @@ int main() {
 
 	stbi_image_free(bytes);*/
 
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 360, 180, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+	// glTexSubImage2D won't work without a texture to render to, so a texture with the desired width and height is generated
+	// with NULL data.
+
+	// ******************************* Texture Generation *******************************
+
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, textureWidth, textureHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
 	glGenerateMipmap(GL_TEXTURE_2D);
 
-	glTexSubImage2D(GL_TEXTURE_2D, 0, 5, 5, 3, 4, GL_RGB, GL_UNSIGNED_BYTE, data);
+	glTexSubImage2D(GL_TEXTURE_2D, 0, 100, 100, 1, 1, GL_RGB, GL_UNSIGNED_BYTE, cellColorData);
 
 	shaderProgram.Use();
 	glUniform1i(glGetUniformLocation(shaderProgram.ID, "texture"), 0);
@@ -178,7 +179,6 @@ int main() {
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 
-		
 	}
 
 	// Ends the instance of GLFW.
