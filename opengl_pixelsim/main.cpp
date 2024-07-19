@@ -81,10 +81,12 @@ int main() {
 
 		empty,
 		red,
-		blue,
-		yellow
+		green,
+		blue
 
 	};
+
+	// Allocating memory for cell types and setting them all to empty:
 
 	cell_types cellTypeData[textureHeight][textureWidth];
 
@@ -97,24 +99,61 @@ int main() {
 		}
 	}
 
+	// Allocating memory for cell colors and setting them all to black:
+
 	unsigned char cellColorData[textureHeight * textureWidth * 3];
+
+	for (int i = 0; i < textureHeight * textureWidth * 3; i++) {
+
+		cellColorData[i] = 0;
+
+	}
 
 	for (int i = 0; i < textureHeight; i++) {
 
 		for (int j = 0; j < textureWidth; j++) {
 
+			int index = (i * textureWidth + j) * 3;
+
 			switch (cellTypeData[i][j]) {
 
 				case empty:
 
-					std::cout << "Cell is black";
+					cellColorData[index] = 0;
+					cellColorData[index + 1] = 0;
+					cellColorData[index + 2] = 0;
 
-					//make the cells black.
-					
+					break;
+
+				case red:
+
+					cellColorData[index] = 255;
+					cellColorData[index + 1] = 0;
+					cellColorData[index + 2] = 0;
+
+					break;
+
+				case green:
+
+					cellColorData[index] = 0;
+					cellColorData[index + 1] = 255;
+					cellColorData[index + 2] = 0;
+
+					break;
+
+				case blue:
+
+					cellColorData[index] = 0;
+					cellColorData[index + 1] = 0;
+					cellColorData[index + 2] = 255;
+
+					break;
+
 			}
 		}
-
 	}
+
+	//std::cout << static_cast<int>(cellColorData[i * textureWidth + j * 3]) << ", " << static_cast<int>(cellColorData[i * textureWidth + j * 3 + 1]) << ", " << static_cast<int>(cellColorData[i * textureWidth + j * 3 + 2]) << "\n";
 
 	// Setup the shaders to render the texture.
 
