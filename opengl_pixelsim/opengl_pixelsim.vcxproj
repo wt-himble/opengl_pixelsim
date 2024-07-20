@@ -135,6 +135,7 @@
     <ClCompile Include="..\src\glad.c" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ShaderClass.cpp" />
+    <ClCompile Include="SimFunc.cpp" />
     <ClCompile Include="stb_image.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -143,6 +144,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ShaderClass.h" />
+    <ClInclude Include="SimFunc.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\images\testImage.jpg" />

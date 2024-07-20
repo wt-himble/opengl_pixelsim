@@ -1,10 +1,11 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
-#include "ShaderClass.h"
 #include <stb/stb_image.h>
 #include <filesystem>
 
+#include "ShaderClass.h"
+#include "SimFunc.h"
 
 int main() {
 
@@ -52,11 +53,6 @@ int main() {
 
 	// ******************************* Initializing *******************************
 
-	// Variables to control the texture dimensions (used to create the "play area" for the simulation):
-
-	const int textureWidth = 256;
-	const int textureHeight = 144;
-
 	// Information relating to quad:
 
 	float vertexData[] = {
@@ -77,81 +73,51 @@ int main() {
 
 	};
 
-	enum cell_types {
+	simFunctionality simulation;
 
-		empty,
-		red,
-		green,
-		blue
+	/*for (int i = 0; i < textureheight; i++) {
 
-	};
+		for (int j = 0; j < texturewidth; j++) {
 
-	// Allocating memory for cell types and setting them all to empty:
+			int index = (i * texturewidth + j) * 3;
 
-	cell_types cellTypeData[textureHeight][textureWidth];
+			switch (celltypedata[i][j]) {
 
-	for (int i = 0; i < textureHeight; i++) {
+			case empty:
 
-		for (int j = 0; j < textureWidth; j++) {
+				cellcolordata[index] = 0;
+				cellcolordata[index + 1] = 0;
+				cellcolordata[index + 2] = 0;
 
-			cellTypeData[i][j] = empty;
+				break;
 
-		}
-	}
+			case red:
 
-	// Allocating memory for cell colors and setting them all to black:
+				cellcolordata[index] = 255;
+				cellcolordata[index + 1] = 0;
+				cellcolordata[index + 2] = 0;
 
-	unsigned char cellColorData[textureHeight * textureWidth * 3];
+				break;
 
-	for (int i = 0; i < textureHeight * textureWidth * 3; i++) {
+			case green:
 
-		cellColorData[i] = 0;
+				cellcolordata[index] = 0;
+				cellcolordata[index + 1] = 255;
+				cellcolordata[index + 2] = 0;
 
-	}
+				break;
 
-	for (int i = 0; i < textureHeight; i++) {
+			case blue:
 
-		for (int j = 0; j < textureWidth; j++) {
+				cellcolordata[index] = 0;
+				cellcolordata[index + 1] = 0;
+				cellcolordata[index + 2] = 255;
 
-			int index = (i * textureWidth + j) * 3;
-
-			switch (cellTypeData[i][j]) {
-
-				case empty:
-
-					cellColorData[index] = 0;
-					cellColorData[index + 1] = 0;
-					cellColorData[index + 2] = 0;
-
-					break;
-
-				case red:
-
-					cellColorData[index] = 255;
-					cellColorData[index + 1] = 0;
-					cellColorData[index + 2] = 0;
-
-					break;
-
-				case green:
-
-					cellColorData[index] = 0;
-					cellColorData[index + 1] = 255;
-					cellColorData[index + 2] = 0;
-
-					break;
-
-				case blue:
-
-					cellColorData[index] = 0;
-					cellColorData[index + 1] = 0;
-					cellColorData[index + 2] = 255;
-
-					break;
+				break;
 
 			}
 		}
-	}
+	}*/
 
 	//std::cout << static_cast<int>(cellColorData[i * textureWidth + j * 3]) << ", " << static_cast<int>(cellColorData[i * textureWidth + j * 3 + 1]) << ", " << static_cast<int>(cellColorData[i * textureWidth + j * 3 + 2]) << "\n";
 
@@ -226,10 +192,10 @@ int main() {
 
 	// ******************************* Texture Generation *******************************
 
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, textureWidth, textureHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 256, 144, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
 	glGenerateMipmap(GL_TEXTURE_2D);
 
-	glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, textureWidth, textureHeight, GL_RGB, GL_UNSIGNED_BYTE, cellColorData);
+	glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 256, 144, GL_RGB, GL_UNSIGNED_BYTE, simulation.cellColorData);
 
 	shaderProgram.Use();
 	glUniform1i(glGetUniformLocation(shaderProgram.ID, "texture"), 0);

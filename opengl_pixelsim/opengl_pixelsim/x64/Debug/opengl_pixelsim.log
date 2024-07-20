@@ -1,3 +1,9 @@
 ﻿  main.cpp
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\filesystem(12): warning STL4038: The contents of <filesystem> are available only with C++17 or later.
-  opengl_pixelsim.vcxproj -> C:\GitHub\opengl_pixelsim\opengl_pixelsim\x64\Debug\opengl_pixelsim.exe
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.40.33807\include\filesystem(12): warning STL4038: The contents of <filesystem> are available only with C++17 or later.
+C:\GitHub\opengl_pixelsim\opengl_pixelsim\simulation_functionality.h(15,17): warning C4091: 'typedef ': ignored on left of 'simFunctionality::Target' when no variable is declared
+  simulation_functionality.cpp
+C:\GitHub\opengl_pixelsim\opengl_pixelsim\simulation_functionality.h(15,17): warning C4091: 'typedef ': ignored on left of 'simFunctionality::Target' when no variable is declared
+C:\GitHub\opengl_pixelsim\opengl_pixelsim\simulation_functionality.cpp(39,33): error C2556: 'Target simFunctionality::findTarget(simFunctionality::cell_types,int,int)': overloaded function differs only by return type from 'simFunctionality::Target simFunctionality::findTarget(simFunctionality::cell_types,int,int)'
+C:\GitHub\opengl_pixelsim\opengl_pixelsim\simulation_functionality.cpp(39,33): error C2371: 'simFunctionality::findTarget': redefinition; different basic types
+C:\GitHub\opengl_pixelsim\opengl_pixelsim\simulation_functionality.cpp(65,4): error C2059: syntax error: '}'
+  Generating Code...
