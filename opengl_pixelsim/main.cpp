@@ -73,59 +73,15 @@ int main() {
 
 	};
 
-	simFunctionality simulation;
+	// Create the object for the simulation to run:
 
-	/*for (int i = 0; i < textureheight; i++) {
+	SimFunc simulation;
 
-		for (int j = 0; j < texturewidth; j++) {
-
-			int index = (i * texturewidth + j) * 3;
-
-			switch (celltypedata[i][j]) {
-
-			case empty:
-
-				cellcolordata[index] = 0;
-				cellcolordata[index + 1] = 0;
-				cellcolordata[index + 2] = 0;
-
-				break;
-
-			case red:
-
-				cellcolordata[index] = 255;
-				cellcolordata[index + 1] = 0;
-				cellcolordata[index + 2] = 0;
-
-				break;
-
-			case green:
-
-				cellcolordata[index] = 0;
-				cellcolordata[index + 1] = 255;
-				cellcolordata[index + 2] = 0;
-
-				break;
-
-			case blue:
-
-				cellcolordata[index] = 0;
-				cellcolordata[index + 1] = 0;
-				cellcolordata[index + 2] = 255;
-
-				break;
-
-			}
-		}
-	}*/
-
-	//std::cout << static_cast<int>(cellColorData[i * textureWidth + j * 3]) << ", " << static_cast<int>(cellColorData[i * textureWidth + j * 3 + 1]) << ", " << static_cast<int>(cellColorData[i * textureWidth + j * 3 + 2]) << "\n";
-
-	// Setup the shaders to render the texture.
+	// Setup the shaders to render the texture:
 
 	Shader shaderProgram("default.vert", "default.frag");
 
-	// Create and setup the information needed for the quad the texture will render to.
+	// Create and setup the information needed for the quad the texture will render to:
 
 	GLuint VAO, VBO, EBO;
 
@@ -195,8 +151,6 @@ int main() {
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 256, 144, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
 	glGenerateMipmap(GL_TEXTURE_2D);
 
-	glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 256, 144, GL_RGB, GL_UNSIGNED_BYTE, simulation.cellColorData);
-
 	shaderProgram.Use();
 	glUniform1i(glGetUniformLocation(shaderProgram.ID, "texture"), 0);
 
@@ -204,8 +158,11 @@ int main() {
 
 	while (!glfwWindowShouldClose(window)) {
 
-		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
+		// Run through the updates needed for every cell:
+
+		simulation.iterateEpoch();
+
+		glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 256, 144, GL_RGB, GL_UNSIGNED_BYTE, simulation.cellColorData);
 
 		glBindVertexArray(VAO);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
