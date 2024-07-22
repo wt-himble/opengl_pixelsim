@@ -3,6 +3,8 @@
 #include <iostream>
 #include <stb/stb_image.h>
 #include <filesystem>
+#include <chrono>
+#include <thread>
 
 #include "ShaderClass.h"
 #include "SimFunc.h"
@@ -52,6 +54,9 @@ int main() {
 	gladLoadGL();
 
 	// ******************************* Initializing *******************************
+
+	using namespace std::this_thread;
+	using namespace std::chrono;
 
 	// Information relating to quad:
 
@@ -163,6 +168,8 @@ int main() {
 		simulation.iterateEpoch();
 
 		glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 256, 144, GL_RGB, GL_UNSIGNED_BYTE, simulation.cellColorData);
+
+		sleep_for(milliseconds(50));
 
 		glBindVertexArray(VAO);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);

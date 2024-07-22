@@ -4,13 +4,17 @@ class SimFunc {
 
 		enum cell_types {
 
-			empty,
-			red,
-			green,
-			blue, 
-			invalid
+			empty, 
+			red
 
 		};
+
+		typedef struct data {
+
+			int age;
+			cell_types type;
+
+		}typeData;
 
 		struct Target {
 

@@ -1,2 +1,6 @@
 ﻿  SimFunc.cpp
+C:\GitHub\opengl_pixelsim\opengl_pixelsim\SimFunc.cpp(48,13): warning C4101: 'validTarget': unreferenced local variable
+  main.cpp
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\filesystem(12): warning STL4038: The contents of <filesystem> are available only with C++17 or later.
+  Generating Code...
   opengl_pixelsim.vcxproj -> C:\GitHub\opengl_pixelsim\opengl_pixelsim\x64\Debug\opengl_pixelsim.exe

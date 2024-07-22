@@ -10,9 +10,7 @@ SimFunc::SimFunc() {
 		for (int j = 0; j < 256; j++) {
 
 			cellTypeData[i][j] = empty;
-			cellTypeData[0][0] = red;
-			cellTypeData[0][50] = green;
-			cellTypeData[0][100] = blue;
+			cellTypeData[70][125] = red;
 
 		}
 	}
@@ -53,55 +51,57 @@ SimFunc::Target SimFunc::findTarget(cell_types currentCellType, int i, int j) {
 	target.coord[0] = -1;
 	target.coord[1] = -1;
 
-	if (currentCellType == red) {
+	int randNum = rand() % 4;
 
-		validTarget = green;
+	switch (randNum) {
 
-	} else if (currentCellType == green) {
+		case 0:
 
-		validTarget = blue;
+			if (isValid(i + 1, j)) {
 
-	} else if (currentCellType == blue) {
+				target.coord[0] = i + 1;
+				target.coord[1] = j;
 
-		validTarget = red;
+				break;
 
-	} else {
+			}
 
-		validTarget = invalid;
+		case 1:
 
-	}
+			if (isValid(i, j + 1)) {
 
-	if (validTarget != invalid) {
+				target.coord[0] = i;
+				target.coord[1] = j + 1;
 
-		if (isValid(i+1, j) && (cellTypeData[i+1][j] == validTarget || cellTypeData[i+1][j] == empty)) {
+				break;
 
-			target.coord[0] = i + 1;
-			target.coord[1] = j;
+			}
 
-		}
-		else if (isValid(i, j + 1) && (cellTypeData[i][j + 1] == validTarget || cellTypeData[i][j + 1] == empty)) {
+		case 2:
 
-			target.coord[0] = i;
-			target.coord[1] = j + 1;
+			if (isValid(i-1, j)) {
 
-		}
-		else if (isValid(i - 1, j) && (cellTypeData[i - 1][j] == validTarget || cellTypeData[i - 1][j] == empty)) {
+				target.coord[0] = i - 1;
+				target.coord[1] = j;
 
-			target.coord[0] = i - 1;
-			target.coord[1] = j;
+				break;
 
-		}
-		else if (isValid(i, j - 1) && (cellTypeData[i][j - 1] == validTarget || cellTypeData[i][j - 1] == empty)) {
+			}
 
-			target.coord[0] = i;
-			target.coord[1] = j - 1;
+		case 3:
 
-		}
+			if (isValid(i, j - 1)) {
 
+				target.coord[0] = i;
+				target.coord[1] = j - 1;
+
+				break;
+
+			}
+		
 	}
 
 	return target;
-
 }
 
 void SimFunc::iterateEpoch() {
@@ -118,39 +118,12 @@ void SimFunc::iterateEpoch() {
 
 					int index = (target.coord[0] * 256 + target.coord[1]) * 3;
 
-					switch (cellTypeData[i][j]) {
+					cellColorData[index] = 255;
+					cellColorData[index+1] = 0;
+					cellColorData[index+2] = 0;
 
-					case red:
+					cellTypeData[target.coord[0]][target.coord[1]] = red;
 
-						cellColorData[index] = 255;
-						cellColorData[index + 1] = 0;
-						cellColorData[index + 2] = 0;
-
-						cellTypeData[target.coord[0]][target.coord[1]] = red;
-
-						break;
-
-					case green:
-
-						cellColorData[index] = 0;
-						cellColorData[index + 1] = 255;
-						cellColorData[index + 2] = 0;
-
-						cellTypeData[target.coord[0]][target.coord[1]] = green;
-
-						break;
-
-					case blue:
-
-						cellColorData[index] = 0;
-						cellColorData[index + 1] = 0;
-						cellColorData[index + 2] = 255;
-
-						cellTypeData[target.coord[0]][target.coord[1]] = blue;
-
-						break;
-
-					}
 				}
 			}
 		}
