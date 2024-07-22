@@ -5,14 +5,14 @@ class SimFunc {
 		enum cell_types {
 
 			empty, 
-			red
+			full
 
 		};
 
 		typedef struct data {
 
-			int age;
 			cell_types type;
+			int age;
 
 		}typeData;
 
@@ -22,7 +22,7 @@ class SimFunc {
 
 		};
 
-		cell_types cellTypeData[144][256];
+		typeData cellTypeData[144][256];
 		unsigned char cellColorData[144 * 256 * 3];
 
 		SimFunc();

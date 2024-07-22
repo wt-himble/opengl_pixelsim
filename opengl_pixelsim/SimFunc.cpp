@@ -9,19 +9,16 @@ SimFunc::SimFunc() {
 
 		for (int j = 0; j < 256; j++) {
 
-			cellTypeData[i][j] = empty;
-			cellTypeData[70][125] = red;
+			cellTypeData[i][j].type = empty;
+			cellTypeData[i][j].age = 0;
 
 		}
 	}
 
-	// Constructor for cellColorData (defaults all cells to black):
+	// Initial conditions for simulation:
 
-	for (int i = 0; i < 256 * 144 * 3; i++) {
-
-		cellColorData[i] = 0;
-
-	}
+	cellTypeData[0][0].type = full;
+	cellTypeData[0][0].age = 50;
 
 }
 
@@ -45,7 +42,6 @@ bool SimFunc::isValid(int i, int j) {
 
 SimFunc::Target SimFunc::findTarget(cell_types currentCellType, int i, int j) {
 
-	cell_types validTarget;
 	Target target;
 
 	target.coord[0] = -1;
@@ -59,43 +55,59 @@ SimFunc::Target SimFunc::findTarget(cell_types currentCellType, int i, int j) {
 
 			if (isValid(i + 1, j)) {
 
-				target.coord[0] = i + 1;
-				target.coord[1] = j;
+				if (cellTypeData[i + 1][j].type == empty) {
 
-				break;
+					target.coord[0] = i + 1;
+					target.coord[1] = j;
 
+					break;
+
+
+				}
 			}
 
 		case 1:
 
 			if (isValid(i, j + 1)) {
 
-				target.coord[0] = i;
-				target.coord[1] = j + 1;
+				if (cellTypeData[i][j+1].type == empty) {
 
-				break;
+					target.coord[0] = i;
+					target.coord[1] = j + 1;
 
+					break;
+
+				}
 			}
 
 		case 2:
 
-			if (isValid(i-1, j)) {
+			if (isValid(i - 1, j)) {
 
-				target.coord[0] = i - 1;
-				target.coord[1] = j;
+				if (cellTypeData[i - 1][j].type == empty) {
 
-				break;
+					target.coord[0] = i - 1;
+					target.coord[1] = j;
 
+					break;
+
+
+				}
 			}
 
 		case 3:
 
 			if (isValid(i, j - 1)) {
 
-				target.coord[0] = i;
-				target.coord[1] = j - 1;
+				if (cellTypeData[i][j-1].type == empty) {
 
-				break;
+					target.coord[0] = i;
+					target.coord[1] = j - 1;
+
+					break;
+
+
+				}
 
 			}
 		
@@ -110,19 +122,45 @@ void SimFunc::iterateEpoch() {
 
 		for (int j = 0; j < 256; j++) {
 
-			if (cellTypeData[i][j] != empty) {
+			// Rendering colors based on cell type:
 
-				Target target = findTarget(cellTypeData[i][j], i, j);
+			int index = (i * 256 + j) * 3;
+
+			if (cellTypeData[i][j].type == full) {
+
+				cellColorData[index] = 0;
+				cellColorData[index + 1] = 5 * cellTypeData[i][j].age;
+				cellColorData[index + 2] = 0;
+
+			} else {
+
+				cellColorData[index] = 0;
+				cellColorData[index + 1] = 0;
+				cellColorData[index + 2] = 0;
+			}
+
+			// Aging cells:
+
+			if (cellTypeData[i][j].age > 0) {
+
+				cellTypeData[i][j].age--;
+
+			} else if (cellTypeData[i][j].age == 0) {
+
+				cellTypeData[i][j].type = empty;
+
+			}
+
+			// Spreading cells:
+
+			if (cellTypeData[i][j].type != empty && cellTypeData[i][j].age > 5) {
+
+				Target target = findTarget(cellTypeData[i][j].type, i, j);
 
 				if (target.coord[0] != -1) {
 
-					int index = (target.coord[0] * 256 + target.coord[1]) * 3;
-
-					cellColorData[index] = 255;
-					cellColorData[index+1] = 0;
-					cellColorData[index+2] = 0;
-
-					cellTypeData[target.coord[0]][target.coord[1]] = red;
+					cellTypeData[target.coord[0]][target.coord[1]].type = full;
+					cellTypeData[target.coord[0]][target.coord[1]].age = 50;
 
 				}
 			}
