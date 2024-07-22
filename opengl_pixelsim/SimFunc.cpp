@@ -17,7 +17,7 @@ SimFunc::SimFunc() {
 
 	// Initial conditions for simulation:
 
-	cellTypeData[0][0].type = full;
+	cellTypeData[0][0].type = green;
 	cellTypeData[0][0].age = 50;
 
 }
@@ -126,11 +126,17 @@ void SimFunc::iterateEpoch() {
 
 			int index = (i * 256 + j) * 3;
 
-			if (cellTypeData[i][j].type == full) {
+			if (cellTypeData[i][j].type == green) {
 
 				cellColorData[index] = 0;
 				cellColorData[index + 1] = 5 * cellTypeData[i][j].age;
 				cellColorData[index + 2] = 0;
+
+			} else if (cellTypeData[i][j].type == blue) {
+
+				cellColorData[index] = 0;
+				cellColorData[index + 1] = 0;
+				cellColorData[index + 2] = 5 * cellTypeData[i][j].age;
 
 			} else {
 
@@ -159,9 +165,23 @@ void SimFunc::iterateEpoch() {
 
 				if (target.coord[0] != -1) {
 
-					cellTypeData[target.coord[0]][target.coord[1]].type = full;
-					cellTypeData[target.coord[0]][target.coord[1]].age = 50;
+					switch (cellTypeData[i][j].type) {
 
+						case green:
+
+							cellTypeData[target.coord[0]][target.coord[1]].type = green;
+							cellTypeData[target.coord[0]][target.coord[1]].age = 50;
+
+							break;
+
+						case blue:
+
+							cellTypeData[target.coord[0]][target.coord[1]].type = blue;
+							cellTypeData[target.coord[0]][target.coord[1]].age = 50;
+
+							break;
+
+					}
 				}
 			}
 		}

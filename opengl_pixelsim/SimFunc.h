@@ -5,7 +5,8 @@ class SimFunc {
 		enum cell_types {
 
 			empty, 
-			full
+			green, 
+			blue
 
 		};
 
