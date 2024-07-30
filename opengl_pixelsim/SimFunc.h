@@ -2,6 +2,8 @@ class SimFunc {
 
 	public:
 
+		// Possible types for cells. Some may currently be unsupported. 
+
 		enum cell_types {
 
 			empty, 
@@ -9,6 +11,8 @@ class SimFunc {
 			blue
 
 		};
+
+		// Contains the information relating a cell. The type of cell and age are stored. 
 
 		typedef struct data {
 
@@ -22,6 +26,8 @@ class SimFunc {
 			int coord[2];
 
 		};
+
+		// Arrays for storing the cell information. Hard coded as the simulation will not be larger than 256 * 144. 
 
 		typeData cellTypeData[144][256];
 		unsigned char cellColorData[144 * 256 * 3];

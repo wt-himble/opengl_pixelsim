@@ -124,7 +124,7 @@ int main() {
 
 	// ******************************* Image Loading *******************************
 
-	// An included image loader in the code. In the event I want to pull an image to use as the initial texture, this 
+	// An included image loader in the code. In the event an image is to be used as the initial texture, this 
 	// portion of the code will be uncommented. 
 
 	//int width, height, nChannels;
@@ -160,6 +160,8 @@ int main() {
 	glUniform1i(glGetUniformLocation(shaderProgram.ID, "texture"), 0);
 
 	// ******************************* Main Loop *******************************
+
+	sleep_for(seconds(2));
 
 	while (!glfwWindowShouldClose(window)) {
 

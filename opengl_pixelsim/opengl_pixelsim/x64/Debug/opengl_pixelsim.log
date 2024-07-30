@@ -1,2 +1,5 @@
 ﻿  SimFunc.cpp
+C:\GitHub\opengl_pixelsim\opengl_pixelsim\SimFunc.cpp(131,32): warning C4244: '=': conversion from 'double' to 'unsigned char', possible loss of data
+C:\GitHub\opengl_pixelsim\opengl_pixelsim\SimFunc.cpp(132,36): warning C4244: '=': conversion from 'double' to 'unsigned char', possible loss of data
+C:\GitHub\opengl_pixelsim\opengl_pixelsim\SimFunc.cpp(133,36): warning C4244: '=': conversion from 'double' to 'unsigned char', possible loss of data
   opengl_pixelsim.vcxproj -> C:\GitHub\opengl_pixelsim\opengl_pixelsim\x64\Debug\opengl_pixelsim.exe

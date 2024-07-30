@@ -18,7 +18,7 @@ SimFunc::SimFunc() {
 	// Initial conditions for simulation:
 
 	cellTypeData[0][0].type = green;
-	cellTypeData[0][0].age = 50;
+	cellTypeData[0][0].age = 30;
 
 }
 
@@ -39,6 +39,8 @@ bool SimFunc::isValid(int i, int j) {
 
 // Goes through the neighbouring cells of the current target cell and returns the coordinates of the first valid target.
 // Returns a Target struct.
+
+// It is currently setup to be random.
 
 SimFunc::Target SimFunc::findTarget(cell_types currentCellType, int i, int j) {
 
@@ -116,6 +118,9 @@ SimFunc::Target SimFunc::findTarget(cell_types currentCellType, int i, int j) {
 	return target;
 }
 
+// Iterates through the current epoch of the simulation. Ages and spreads cells.
+// Also updates colours of cells to reflect these changes.
+
 void SimFunc::iterateEpoch() {
 
 	for (int i = 0; i < 144; i++) {
@@ -128,15 +133,15 @@ void SimFunc::iterateEpoch() {
 
 			if (cellTypeData[i][j].type == green) {
 
-				cellColorData[index] = 0;
-				cellColorData[index + 1] = 5 * cellTypeData[i][j].age;
-				cellColorData[index + 2] = 0;
+				cellColorData[index] = 3.8 * cellTypeData[i][j].age;
+				cellColorData[index + 1] = 3.4 * cellTypeData[i][j].age;
+				cellColorData[index + 2] = 4.1 * cellTypeData[i][j].age;;
 
 			} else if (cellTypeData[i][j].type == blue) {
 
 				cellColorData[index] = 0;
 				cellColorData[index + 1] = 0;
-				cellColorData[index + 2] = 5 * cellTypeData[i][j].age;
+				cellColorData[index + 2] = 8 * cellTypeData[i][j].age;
 
 			} else {
 
@@ -170,14 +175,14 @@ void SimFunc::iterateEpoch() {
 						case green:
 
 							cellTypeData[target.coord[0]][target.coord[1]].type = green;
-							cellTypeData[target.coord[0]][target.coord[1]].age = 50;
+							cellTypeData[target.coord[0]][target.coord[1]].age = 30;
 
 							break;
 
 						case blue:
 
 							cellTypeData[target.coord[0]][target.coord[1]].type = blue;
-							cellTypeData[target.coord[0]][target.coord[1]].age = 50;
+							cellTypeData[target.coord[0]][target.coord[1]].age = 5;
 
 							break;
 
