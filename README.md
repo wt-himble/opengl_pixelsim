@@ -5,7 +5,8 @@ Having been inspired by those two examples, I thought a good exercise in C++ and
 together a cellular automata simulation.
 
 This repo is not meant to be useful by any means. The code is structured in such a way that scaling the simulation 
-would prove difficult. As well, there may or may not be portions of required libraries missing from the repo.
+would prove difficult. As well, there may or may not be portions of required libraries missing from the repo. I also forgot to 
+setup a .gitignore for this project, so there's probably a lot of bloat. (Thanks Visual Studio)
 
 The purpose of this repo is purely to show the code used to create the simulation. For information relating to 
 cellular automata or creating something similar, I would recommend this video by John Jackson:
